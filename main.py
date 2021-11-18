@@ -14,7 +14,7 @@ from reportlab.pdfgen import canvas
 from textwrap import wrap
 
 from pyrogram import Client
-my_tg_client = Client('my_account', api_id=1910146, api_hash='1558300910a39d704a25846b3337bbba')
+my_tg_client = Client('my_account', api_id=9876730, api_hash='f385e5a461eb15942dc1576c4e5f35d7')
 
 
 class PdfGenerator:
@@ -83,7 +83,7 @@ def gen_invite(app: Client, msg: Message):
 
     surname, name = name.split(' ', maxsplit=1)
 
-    pdf = invite_gen.gen_cert_with_name(surname, name, y_text_offset=145, font_size=13, leading=17, one_line=True)
+    pdf = invite_gen.gen_cert_with_name(surname, name, y_text_offset=35, title_offset=5, leading=15, font_size=18, one_line=True, bold=True, title_font_size=13)
 
     result_file_name = f'{surname} {name}.pdf'
     with open(result_file_name, "wb") as file:
@@ -99,7 +99,7 @@ def gen_c2(app: Client, msg: Message):
     surname, first_name, middle_name, title = name.split(' ', maxsplit=3)
     name = f'{first_name} {middle_name}'
 
-    pdf = cert2_gen.gen_cert_with_name(surname, name, title, y_text_offset=43, title_offset=5, leading=15, font_size=18, one_line=True, bold=True, title_font_size=13)
+    pdf = cert2_gen.gen_cert_with_name(surname, name, y_text_offset=43, title_offset=5, leading=15, font_size=18, one_line=True, bold=True, title_font_size=13)
 
     result_file_name = f'{surname} {name}.pdf'
     with open(result_file_name, "wb") as file:
