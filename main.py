@@ -78,13 +78,13 @@ def gen_cert2(app: Client, msg: Message):
     msg.reply_document(result_file_name)
 
 
-@my_tg_client.on_message(filters.command('conference'))
+@my_tg_client.on_message(filters.command('участник'))
 def gen_invite(app: Client, msg: Message):
     name = msg.text.split(' ', maxsplit=1)[1]
 
     surname, name = name.split(' ', maxsplit=1)
 
-    pdf = invite_gen.gen_cert_with_name(surname, name, y_text_offset=-5, title_offset=5, leading=15, font_size=18, one_line=True, bold=True, title_font_size=13)
+    pdf = invite_gen.gen_cert_with_name(surname, name, y_text_offset=3, title_offset=5, leading=15, font_size=18, one_line=True, bold=True, title_font_size=13)
 
     result_file_name = f'{surname} {name}.pdf'
     with open(result_file_name, "wb") as file:
