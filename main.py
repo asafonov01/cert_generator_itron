@@ -62,29 +62,30 @@ invite_gen = PdfGenerator('invite.pdf')
 cert_gen = PdfGenerator('cert3.pdf')
 cert2_gen = PdfGenerator('cert2.pdf')
 
-@my_tg_client.on_message(filters.command('gen'))
-def gen_cert2(app: Client, msg: Message):
+@my_tg_client.on_message(filters.command('uch'))
+def gen_cert(app: Client, msg: Message):
     name = msg.text[5:]
 
-    surname, first_name, middle_name, email = name.split(' ')
+    surname, first_name, middle_name = name.split(' ')
     name = f'{first_name} {middle_name}'
 
-    pdf = cert2_gen.gen_cert_with_name(surname, name, bold=True, font_size=18)
+    pdf = cert_gen.gen_cert_with_name(surname, name, bold=True, font_size=18)
 
-    result_file_name = f'{email}.pdf'
+    result_file_name = f'{surname} {name}.pdf'
     with open(result_file_name, "wb") as file:
         pdf.write(file)
 
     msg.reply_document(result_file_name)
 
 
-@my_tg_client.on_message(filters.command('участник'))
+@my_tg_client.on_message(filters.command('thanks'))
 def gen_invite(app: Client, msg: Message):
     name = msg.text.split(' ', maxsplit=1)[1]
 
-    surname, name = name.split(' ', maxsplit=1)
+    surname, first_name, middle_name = name.split(' ', maxsplit=3)
+    name = f'{first_name} {middle_name}'
 
-    pdf = invite_gen.gen_cert_with_name(surname, name, y_text_offset=3, title_offset=5, leading=15, font_size=18, one_line=True, bold=True, title_font_size=13)
+    pdf = invite_gen.gen_cert_with_name(surname, name, y_text_offset=48, title_offset=5, leading=30, font_size=18, one_line=True, bold=True, title_font_size=13)
 
     result_file_name = f'{surname} {name}.pdf'
     with open(result_file_name, "wb") as file:
@@ -93,20 +94,20 @@ def gen_invite(app: Client, msg: Message):
     msg.reply_document(result_file_name)
 
 
-'''@my_tg_client.on_message(filters.command('cert'))
-def gen_(app: Client, msg: Message):
+@my_tg_client.on_message(filters.command('cert'))
+def gen_cert2(app: Client, msg: Message):
     name = msg.text[6:]
 
-    surname, first_name, middle_name, title = name.split(' ', maxsplit=3)
+    surname, first_name, middle_name = name.split(' ', maxsplit=3)
     name = f'{first_name} {middle_name}'
 
-    pdf = cert2_gen.gen_cert_with_name(surname, name, title, y_text_offset=43, title_offset=5, leading=15, font_size=18, one_line=True, bold=True, title_font_size=13)
+    pdf = cert2_gen.gen_cert_with_name(surname, name, y_text_offset=28, title_offset=5, leading=20, font_size=18, one_line=True, bold=True, title_font_size=13)
 
     result_file_name = f'{surname} {name}.pdf'
     with open(result_file_name, "wb") as file:
         pdf.write(file)
 
-    msg.reply_document(result_file_name)'''
+    msg.reply_document(result_file_name)
 
 
 @my_tg_client.on_message(filters.command('19'))
