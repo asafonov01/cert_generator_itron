@@ -2,7 +2,7 @@ import json
 import textwrap
 import time
 
-from PyPDF2.pdf import PageObject
+from PyPDF2 import PageObject
 from pyrogram import idle, filters, Client
 from pyrogram.types import Message
 from reportlab.pdfbase import pdfmetrics
@@ -96,14 +96,14 @@ def gen_invite(app: Client, msg: Message):
 
 @my_tg_client.on_message(filters.command('cert'))
 def gen_cert2(app: Client, msg: Message):
-    name = msg.text[6:]
+    name = msg.text.split(' ', maxsplit=1)[1]
 
-    surname, first_name, middle_name = name.split(' ', maxsplit=3)
+    surname, first_name, middle_name, email = name.split(' ', maxsplit=3)
     name = f'{first_name} {middle_name}'
 
-    pdf = cert2_gen.gen_cert_with_name(surname, name, y_text_offset=28, title_offset=5, leading=20, font_size=18, one_line=True, bold=True, title_font_size=13)
+    pdf = cert2_gen.gen_cert_with_name(surname, name, y_text_offset=120, title_offset=5, leading=23, font_size=18, one_line=True, bold=True, title_font_size=13)
 
-    result_file_name = f'{surname} {name}.pdf'
+    result_file_name = f'{email}.pdf'
     with open(result_file_name, "wb") as file:
         pdf.write(file)
 
